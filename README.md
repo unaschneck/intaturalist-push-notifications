@@ -2,6 +2,10 @@
 
 Receive push notifications on an iPhone for user's newest identifications
 
+- pyinaturalist
+- ntfy
+- GitHub Actions
+
 ## Development Environment
 To run or test against `intaturalist-push-notifications` github repo/fork, a development environment can be created via conda/miniconda
 
