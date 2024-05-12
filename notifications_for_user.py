@@ -1,12 +1,16 @@
 from pyinaturalist import *
 import string
-from datetime import datetime, timedelta
+import sys
+import requests
+from time import sleep
+from datetime import datetime, timedelta, time
 
-user = "test-user"
-last_check_datetime = datetime.now() - timedelta(days=1, hours=3, minutes=1)
+user = sys.argv[1]
+last_check_datetime = datetime.now() - timedelta(days=0, hours=12, minutes=6)
 
 def getObservations(user_id):
-	recent_observations = get_observations(user_id=user_id, d1=last_check_datetime)
+	print("\n")
+	recent_observations = get_observations(user_id=user_id)#, d1=last_check_datetime)
 	observations = recent_observations["results"]
 	for observation in observations:
 		#pprint(observation)
@@ -14,7 +18,7 @@ def getObservations(user_id):
 		if id_guess is None:
 			id_guess = observation["taxon"]["preferred_common_name"]
 		id_guess = string.capwords(id_guess)
-		print(f"{user} spotted: {id_guess}")
+		print(f"{user} spotted {id_guess}")
 		previous_observations = get_observations(user_id=user_id, taxon_name=id_guess)["results"]
 		#pprint(previous_observations)
 		if len(previous_observations) > 1 and len(previous_observations) <= 14:
@@ -23,8 +27,11 @@ def getObservations(user_id):
 			print(f"Seen before a lot! ({len(previous_observations)} times)")
 		if len(previous_observations) <= 1:
 			print("Never seen before")
-		print(observation["place_guess"])
+		location_guess = observation["place_guess"]
+		print(location_guess)
 		print(observation["uri"])
+		print(observation["taxon"]["default_photo"]["square_url"])
+		print(observation["taxon"]["iconic_taxon_name"])
 		print("\n")
 		#break
 		"""
@@ -54,5 +61,29 @@ def getObservations(user_id):
 		"""
 	return observations
 
+def testRequest():
+	plant = "herb"         # Plantae
+	fungi = "mushroom"     # Fungi
+	insect = "bug"         # Insecta
+	bird = "parrot"        # Aves
+	mammal = "rat"         # Mammalia
+	fish = "tropical_fish" # Actinopterygii
+	arachnid = "spider"    # Arachnida
+	reptile = "snake"      # Reptilia
+	amphibia = "frog"      # Amphibia
+	mollusk = "snail"      # Mollusca
+	other = "worm"         # Animalia
+	unknown = "feet"       # Unknown
+
+	requests.post("https://ntfy.sh/testing314",
+				data=f"{user} spotted a Brown Rat (Again!) in Tarturus",
+				headers = {
+					"Title": "New Observation!",
+					"Tags": mammal,
+					"Click": "https://www.inaturalist.org/observations/215126231",
+					"Icon":"https://avatars.githubusercontent.com/u/22159116?v=4"
+				})
+
 if __name__ == '__main__':
-	getObservations(user)
+	#getObservations(user)
+	testRequest()
