@@ -1,4 +1,5 @@
 # intaturalist-push-notifications
+[![retrieve-observations](https://github.com/unaschneck/intaturalist-push-notifications/actions/workflows/observation_reporter.yml/badge.svg)](https://github.com/unaschneck/intaturalist-push-notifications/actions/workflows/observation_reporter.yml)
 
 Receive push notifications on an iPhone for user's newest identifications
 
