@@ -16,12 +16,12 @@ jobs:
         with:
           python-version: '3.12'
 
-    - name: Install dependencies
-      run: |
-        pip install --upgrade pip
-        pip install -r requirements.txt
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
 
-    - name: Retrieve and Send Observations
-      run: |
-        python notifications_for_user.py ${{ secrets.USERNAME_A }} ${{ secrets.NTFY_A }}
-        python notifications_for_user.py ${{ secrets.USERNAME_B }} ${{ secrets.NTFY_B }}
+      - name: Retrieve and Send Observations
+        run: |
+          python notifications_for_user.py ${{ secrets.USERNAME_A }} ${{ secrets.NTFY_A }}
+          python notifications_for_user.py ${{ secrets.USERNAME_B }} ${{ secrets.NTFY_B }}
