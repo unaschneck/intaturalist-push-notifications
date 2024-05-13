@@ -1,0 +1,27 @@
+name: retrieve-observations
+on:
+  schedule:
+    - cron: "*/8 * * * *" # run every 8th minute
+jobs:
+  main-job:
+    name: Main Job
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Check out Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Retrieve and Send Observations
+      run: |
+        python notifications_for_user.py ${{ secrets.USERNAME_A }} ${{ secrets.NTFY_A }}
+        python notifications_for_user.py ${{ secrets.USERNAME_B }} ${{ secrets.NTFY_B }}
