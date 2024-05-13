@@ -2,7 +2,7 @@ name: retrieve-observations
 
 on:
   schedule:
-    - cron: "*/10 * * * *" # run every 10th minute
+    - cron: "*/10 12-23,0-1,2-11/4 * * *" # Every 10 minutes during UTC day, every 4th hour during UTC night
 
 jobs:
   main-job:
@@ -36,5 +36,5 @@ jobs:
 
       - name: Retrieve and Send Observations
         run: |
-          python notifications_for_user.py ${{ secrets.USERNAME_A }} ${{ secrets.NTFY_A }}
-          python notifications_for_user.py ${{ secrets.USERNAME_B }} ${{ secrets.NTFY_B }}
+          python notifications_for_user.py ${{ secrets.USERNAME_A }} ${{ secrets.NTFY_A }} ${{ steps.current-time.outputs.hour }}
+          python notifications_for_user.py ${{ secrets.USERNAME_B }} ${{ secrets.NTFY_B }} ${{ steps.current-time.outputs.hour }}

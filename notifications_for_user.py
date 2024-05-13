@@ -9,10 +9,9 @@ from datetime import datetime, timedelta, time
 user = sys.argv[1]
 nfty_id = sys.argv[2]
 timestamp_hour = sys.argv[3]
-last_check_datetime = datetime.now() - timedelta(days=0, hours=0, minutes=10) # check last 10 minutes
 
-def getObservations(user_id):
-	recent_observations = get_observations(user_id=user_id, d1=last_check_datetime)
+def getObservations(user_id, last_check):
+	recent_observations = get_observations(user_id=user_id, d1=last_check)
 	observations = recent_observations["results"]
 	for observation in observations:
 		#pprint(observation)
@@ -94,4 +93,14 @@ def sendRequest(data_string, taxon, url, icon_img):
 				})
 
 if __name__ == '__main__':
-	getObservations(user)
+	# day: UTC: 12-23,0-1 and night: 2-11
+	timestamp_hour = int(timestamp_hour)
+	if timestamp_hour >= 12 and timestamp_hour <= 23:
+		last_timecheck = (0, 10)
+	if timestamp_hour >= 0 and timestamp_hour <= 1:
+		last_timecheck = (0, 10)
+	if timestamp_hour >= 2 and timestamp_hour <= 11:
+		last_timecheck = (4, 0)
+	print(last_timecheck)
+	last_check_datetime = datetime.now() - timedelta(hours=last_timecheck[0], minutes=last_timecheck[1])
+	getObservations(user, last_check_datetime)
