@@ -24,15 +24,11 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Get current time
+      - name: Get Current UTC Time
         uses: josStorer/get-current-time@v2
         id: current-time
         with:
           format: YYYYMMDD-HH
-
-      - name: Use current time
-        run: |
-          echo ${{ steps.current-time.outputs.hour }}
 
       - name: Retrieve and Send Observations
         run: |
