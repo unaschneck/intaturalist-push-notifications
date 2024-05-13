@@ -8,7 +8,8 @@ from datetime import datetime, timedelta, time
 
 user = sys.argv[1]
 nfty_id = sys.argv[2]
-last_check_datetime = datetime.now() - timedelta(days=0, hours=0, minutes=8) # check last 8 minutes
+timestamp_hour = sys.argv[3]
+last_check_datetime = datetime.now() - timedelta(days=0, hours=0, minutes=10) # check last 10 minutes
 
 def getObservations(user_id):
 	recent_observations = get_observations(user_id=user_id, d1=last_check_datetime)

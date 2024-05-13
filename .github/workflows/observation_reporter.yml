@@ -2,12 +2,12 @@ name: retrieve-observations
 
 on:
   schedule:
-    - cron: "*/8 * * * *" # run every 8th minute
+    - cron: "*/10 * * * *" # run every 10th minute
 
 jobs:
   main-job:
 
-    name: Main Job
+    name: Retrieve Observation
     runs-on: ubuntu-latest
     steps:
 
@@ -29,20 +29,8 @@ jobs:
         id: current-time
         with:
           format: YYYYMMDD-HH
-
-      - name: Use current time
-        env:
-          TIME: ${{ steps.current-time.outputs.time }}
-          R_TIME: ${{ steps.current-time.outputs.readableTime }}
-          F_TIME: ${{ steps.current-time.outputs.formattedTime }}
-          YEAR: ${{ steps.current-time.outputs.year }}
-          DAY: ${{ steps.current-time.outputs.day }}
         run: |
-          echo $TIME
-          echo $R_TIME
-          echo $F_TIME
-          echo $YEAR
-          echo $DAY
+          echo ${{ steps.current-time.outputs.hour }}
 
       - name: Retrieve and Send Observations
         run: |
