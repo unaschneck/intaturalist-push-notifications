@@ -29,6 +29,8 @@ jobs:
         id: current-time
         with:
           format: YYYYMMDD-HH
+
+      - name: Use current time
         run: |
           echo ${{ steps.current-time.outputs.hour }}
 
