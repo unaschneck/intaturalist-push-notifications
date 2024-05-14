@@ -1,10 +1,9 @@
-from pyinaturalist import *
+from pyinaturalist import get_observations
 
-import string
-import sys
-import requests
-from time import sleep
-from datetime import datetime, timedelta, time
+import string # capitalize each word in a string
+import sys # collect command line arguments
+import requests # send ntfy request
+from datetime import datetime, timedelta, time # track time and collection observations
 
 # Command Line Arguments from observation_reporter.yml
 user = sys.argv[1]
@@ -120,6 +119,7 @@ if __name__ == '__main__':
 		# start of the day: collect all overnight observations
 		last_timecheck = (13, 0) # last 13 hours
 
+	print(f"{timestamp_hour} hour and {timestamp_minute} minutes")
 	print(f"Checking the last: {last_timecheck[0]} hours and {last_timecheck[1]} minutes")
 	last_check_datetime = datetime.now() - timedelta(hours=last_timecheck[0], minutes=last_timecheck[1])
 	getObservations(user, last_check_datetime)
