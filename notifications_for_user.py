@@ -39,7 +39,9 @@ def getObservations(user_id, last_check):
 				seen_previous = " (for the first time!) "
 
 		# Retrieve information about location, link to observation, and default img
-		location_guess = observation["place_guess"]
+		location_guess = "a Strange Place"
+		if observation["place_guess"] is not None:
+			location_guess = observation["place_guess"]
 		observation_link = observation["uri"]
 		img_url = observation["taxon"]["default_photo"]["square_url"]
 		taxon_id = observation["taxon"]["iconic_taxon_name"]
@@ -93,14 +95,11 @@ def sendRequest(data_string, taxon, url, icon_img):
 				})
 
 if __name__ == '__main__':
-	# day: UTC: 12-23,0-1 and night: 2-11
 	timestamp_hour = int(timestamp_hour)
-	if timestamp_hour >= 12 and timestamp_hour <= 23:
-		last_timecheck = (0, 10)
-	if timestamp_hour >= 0 and timestamp_hour <= 1:
-		last_timecheck = (0, 10)
-	if timestamp_hour >= 2 and timestamp_hour <= 11:
-		last_timecheck = (4, 0)
+	last_timecheck = (0, 10) # last ten minutes (by default)
+	if timestamp_hour == 14:
+		# start of the day: collect all overnight observations
+		last_timecheck = (13, 0) # last 13 hours
 	print(last_timecheck)
 	last_check_datetime = datetime.now() - timedelta(hours=last_timecheck[0], minutes=last_timecheck[1])
 	getObservations(user, last_check_datetime)
