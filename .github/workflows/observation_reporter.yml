@@ -32,5 +32,5 @@ jobs:
 
       - name: Retrieve and Send Observations
         run: |
-          python notifications_for_user.py ${{ secrets.USERNAME_A }} ${{ secrets.NTFY_A }} ${{ steps.current-time.outputs.hour }}
-          python notifications_for_user.py ${{ secrets.USERNAME_B }} ${{ secrets.NTFY_B }} ${{ steps.current-time.outputs.hour }}
+          python notifications_for_user.py ${{ secrets.USERNAME_A }} ${{ secrets.NTFY_A }} ${{ steps.current-time.outputs.month }} ${{ steps.current-time.outputs.hour }} ${{ steps.current-time.outputs.minute }}
+          python notifications_for_user.py ${{ secrets.USERNAME_B }} ${{ secrets.NTFY_B }} ${{ steps.current-time.outputs.month }} ${{ steps.current-time.outputs.hour }} ${{ steps.current-time.outputs.minute }}

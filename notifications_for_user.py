@@ -6,9 +6,11 @@ import requests
 from time import sleep
 from datetime import datetime, timedelta, time
 
+# Command Line Arguments from observation_reporter.yml
 user = sys.argv[1]
-nfty_id = sys.argv[2]
-timestamp_hour = sys.argv[3]
+ntfy_id = sys.argv[2]
+timestamp_hour = sys.argv[4]
+timestamp_minute = sys.argv[5]
 
 def getObservations(user_id, last_check):
 	recent_observations = get_observations(user_id=user_id, d1=last_check)
@@ -78,28 +80,46 @@ def sendRequest(data_string, taxon, url, icon_img):
 				  "Animalia": other
 				  }
 
+	# Additional specialty tags
+	timestamp_month = int(sys.argv[3])
+	additional_tags = ""
+	if timestamp_month == 10:
+		# October
+		additional_tags = ", jack_o_lantern"
+	if timestamp_month == 11:
+		# November
+		additional_tags = ", turkey"
+	if timestamp_month == 12:
+		# December
+		additional_tags = ", snowman_with_snow"
+
 	# Set tags based on taxon, with default tag for unknown type
 	if taxon in taxon_dict:
 		taxon_tag = taxon_dict[taxon]
 	else:
 		taxon_tag = unknown
 
+	all_tags = taxon_tag + additional_tags
+
 	# testing request: testing314
-	requests.post(f"https://ntfy.sh/{nfty_id}",
+	requests.post(f"https://ntfy.sh/{ntfy_id}",
 				data=data_string,
 				headers = {
 					"Title": "New Observation!",
-					"Tags": taxon_tag,
+					"Tags": all_tags,
 					"Click": url,
 					"Icon":icon_img
 				})
 
 if __name__ == '__main__':
 	timestamp_hour = int(timestamp_hour)
+	timestamp_minute = int(timestamp_minute)
+
 	last_timecheck = (0, 10) # last ten minutes (by default)
-	if timestamp_hour == 14:
+	if timestamp_hour == 14 and timestamp_minute < 13:
 		# start of the day: collect all overnight observations
 		last_timecheck = (13, 0) # last 13 hours
-	print(last_timecheck)
+
+	print(f"Checking the last: {last_timecheck[0]} hours and {last_timecheck[1]} minutes")
 	last_check_datetime = datetime.now() - timedelta(hours=last_timecheck[0], minutes=last_timecheck[1])
 	getObservations(user, last_check_datetime)
