@@ -54,7 +54,8 @@ jobs:
       - name: Retrieve and Send Observations
         run: |
           echo "User 1:"
-          echo "notifications_for_user.py ${{ secrets.USERNAME_A }} ${{ secrets.NTFY_A }} ${{ env.LAST_CREATED_AT }}"
-          python notifications_for_user.py ${{ secrets.USERNAME_A }} ${{ secrets.NTFY_A }} ${{ env.LAST_CREATED_AT }} 
+          echo "steps.vars.outputs.LAST_CREATED_AT: ${{ steps.vars.outputs.LAST_CREATED_AT }}"
+          echo "notifications_for_user.py ${{ secrets.USERNAME_A }} ${{ secrets.NTFY_A }} ${{ steps.vars.outputs.LAST_CREATED_AT }}"
+          python notifications_for_user.py ${{ secrets.USERNAME_A }} ${{ secrets.NTFY_A }} ${{ steps.vars.outputs.LAST_CREATED_AT }} 
           echo "User 2:"
           python notifications_for_user.py ${{ secrets.USERNAME_B }} ${{ secrets.NTFY_B }} ${{ env.LAST_CREATED_AT }}
