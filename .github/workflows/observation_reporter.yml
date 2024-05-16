@@ -42,8 +42,9 @@ jobs:
  
       - name: Get When Workflow Last Ran
         shell: bash
-        id: last_completed_at
+        id: last_workflow
         run: |
+          echo "Workflow id: ${{ env.WORKFLOW_ID }}"
           LAST_CREATED_AT=$(curl --silent --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
                                     --header 'content-type: application/json' \
           "${{ github.api_url }}/repos/${{ github.repository }}/actions/workflows/${{ env.WORKFLOW_ID }}/runs?per_page=1&status=completed&branch=${{ env.BRANCH_NAME }}" \
@@ -54,8 +55,8 @@ jobs:
       - name: Retrieve and Send Observations
         run: |
           echo "User 1:"
-          echo "steps.vars.outputs.LAST_CREATED_AT: ${{ steps.vars.outputs.LAST_CREATED_AT }}"
-          echo "notifications_for_user.py ${{ secrets.USERNAME_A }} ${{ secrets.NTFY_A }} ${{ steps.vars.outputs.LAST_CREATED_AT }}"
-          python notifications_for_user.py ${{ secrets.USERNAME_A }} ${{ secrets.NTFY_A }} ${{ steps.vars.outputs.LAST_CREATED_AT }} 
+          echo "steps.vars.outputs.LAST_CREATED_AT: ${{ env.LAST_CREATED_AT }}"
+          echo "notifications_for_user.py ${{ secrets.USERNAME_A }} ${{ secrets.NTFY_A }} ${{ env.LAST_CREATED_AT }}"
+          python notifications_for_user.py ${{ secrets.USERNAME_A }} ${{ secrets.NTFY_A }} ${{ env.LAST_CREATED_AT }} 
           echo "User 2:"
           python notifications_for_user.py ${{ secrets.USERNAME_B }} ${{ secrets.NTFY_B }} ${{ env.LAST_CREATED_AT }}
