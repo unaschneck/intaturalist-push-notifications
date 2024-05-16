@@ -115,9 +115,9 @@ if __name__ == '__main__':
 	timestamp_minute = int(timestamp_minute)
 
 	last_timecheck = (0, 10) # last ten minutes (by default)
-	if timestamp_hour == 14 and timestamp_minute < 13:
+	if timestamp_hour == 14 and timestamp_minute < 19:
 		# start of the day: collect all overnight observations
-		last_timecheck = (13, 0) # last 13 hours
+		last_timecheck = (14, 0) # last 14 hours
 
 	print(f"{timestamp_hour} hour and {timestamp_minute} minutes")
 	print(f"Checking the last: {last_timecheck[0]} hours and {last_timecheck[1]} minutes")
