@@ -15,7 +15,20 @@ Set [INaturalist username](https://www.inaturalist.org/) and [ntfy topic](https:
 
 Add lines for each INaturalist username at the end of the [`observation_reporter.yml`](https://github.com/unaschneck/intaturalist-push-notifications/blob/main/.github/workflows/observation_reporter.yml)
 
-Github Action scheduled to retrieve recent observations on a [schedule during (day) UTC time](https://github.com/unaschneck/intaturalist-push-notifications/blob/3dd82fec933843d7758cf164732c0a8cbec6f633/.github/workflows/observation_reporter.yml#L5)
+```
+# Username (example: EXAMPLE_USERNAME) and NTFY (example: EXAMPLE_NTFY) stored in secrets 
+
+python notifications_for_user.py ${{ secrets.EXAMPLE_USERNAME }} ${{ secrets.EXAMPLE_NTFY }} ${{ env.LAST_CREATED_AT }} 
+
+```
+
+Github Action scheduled to retrieve recent observations on a [schedule during (day) UTC time](https://github.com/unaschneck/intaturalist-push-notifications/blob/3dd82fec933843d7758cf164732c0a8cbec6f633/.github/workflows/observation_reporter.yml)
+
+Currently scheduled to check for new observations every ten minutes from 15-2 hours UTC (North American Daytime). Note: Github Actions do not always run exactly every ten minutes (depends on internal Github Runner). But the observations will be collected from the last time a workflow was run.
+
+```
+*/10 15-23,0-1 * * *
+```
 
 Each observation since previous check is sent as an individual observation to the nfty topic
 
