@@ -1,15 +1,15 @@
-from pyinaturalist import get_observations
+from pyinaturalist import get_observations     # collect recent observations
 
-import string # capitalize each word in a string
-import sys # collect command line arguments
-import requests # send ntfy request
+import sys                                     # collect command line arguments
+import math                                    # round time to next nearest minute (rounds up)
+import string                                  # capitalize each word in a string
+import requests                                # send ntfy request
 from datetime import datetime, timedelta, time # track time and collection observations
 
-# Command Line Arguments from observation_reporter.yml
+# Command Line Arguments set from observation_reporter.yml
 user = sys.argv[1]
 ntfy_id = sys.argv[2]
-timestamp_hour = sys.argv[4]
-timestamp_minute = sys.argv[5]
+last_workflow_ran_at = datetime.strptime(sys.argv[3], "%Y-%m-%dT%H:%M:%SZ") # UTC
 
 def getObservations(user_id, last_check):
 	recent_observations = get_observations(user_id=user_id, d1=last_check)
@@ -61,7 +61,7 @@ def sendRequest(data_string, taxon, url, icon_img):
 	fish = "tropical_fish" # Actinopterygii
 	arachnid = "spider"    # Arachnida
 	reptile = "snake"      # Reptilia
-	amphibian = "frog"      # Amphibia
+	amphibian = "frog"     # Amphibia
 	mollusk = "snail"      # Mollusca
 	other = "worm"         # Animalia
 	unknown = "feet"       # Unknown
@@ -80,16 +80,13 @@ def sendRequest(data_string, taxon, url, icon_img):
 				  }
 
 	# Additional specialty tags
-	timestamp_month = int(sys.argv[3])
+	current_month = datetime.now().month
 	additional_tags = ""
-	if timestamp_month == 10:
-		# October
+	if current_month == 10: # October
 		additional_tags = ", jack_o_lantern"
-	if timestamp_month == 11:
-		# November
+	if current_month == 11: # November
 		additional_tags = ", turkey"
-	if timestamp_month == 12:
-		# December
+	if current_month == 12: # December
 		additional_tags = ", snowman_with_snow"
 
 	# Set tags based on taxon, with default tag for unknown type
@@ -111,15 +108,12 @@ def sendRequest(data_string, taxon, url, icon_img):
 				})
 
 if __name__ == '__main__':
-	timestamp_hour = int(timestamp_hour)
-	timestamp_minute = int(timestamp_minute)
+	# Collect time since workflow last ran to determine how far to check for recent observations
+	time_since_last_run = datetime.now() - last_workflow_ran_at
+	time_interval_to_check = math.ceil(time_since_last_run.total_seconds() / 60)
+	time_range_to_check = datetime.now()- timedelta(minutes=time_interval_to_check)
 
-	last_timecheck = (0, 10) # last ten minutes (by default)
-	if timestamp_hour == 14 and timestamp_minute < 19:
-		# start of the day: collect all overnight observations
-		last_timecheck = (14, 0) # last 14 hours
-
-	print(f"{timestamp_hour} hour and {timestamp_minute} minutes")
-	print(f"Checking the last: {last_timecheck[0]} hours and {last_timecheck[1]} minutes")
-	last_check_datetime = datetime.now() - timedelta(hours=last_timecheck[0], minutes=last_timecheck[1])
-	getObservations(user, last_check_datetime)
+	print(f"Current Time:            {datetime.now()}")
+	print(f"Last workflow ran at:    {last_workflow_ran_at}")
+	print(f"Minutes Since Last Run:  { time_interval_to_check }")
+	getObservations(user, time_range_to_check)
