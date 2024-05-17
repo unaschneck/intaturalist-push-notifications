@@ -5,7 +5,7 @@ Receive push notifications on an phone or desktop for a given user's newest iden
 
 ## How it Works
 
-- [pyinaturalist]((https://github.com/pyinat/pyinaturalist): Python client to collect observations based on username
+- [pyinaturalist](https://github.com/pyinat/pyinaturalist): Python client to collect observations based on username
 - [GitHub Actions](https://github.com/unaschneck/intaturalist-push-notifications/blob/main/.github/workflows/observation_reporter.yml): Schedule how often observations are collected and sent
 - [ntfy:](https://github.com/binwiederhier/ntfy) Sends push notifications to a Phone/Desktop
 
@@ -19,20 +19,18 @@ Add lines for each INaturalist username at the end of the [`observation_reporter
 # Username (example: EXAMPLE_USERNAME) and NTFY (example: EXAMPLE_NTFY) stored in secrets 
 
 python notifications_for_user.py ${{ secrets.EXAMPLE_USERNAME }} ${{ secrets.EXAMPLE_NTFY }} ${{ env.LAST_CREATED_AT }} 
-
 ```
 
 Github Action scheduled to retrieve recent observations on a [schedule during (day) UTC time](https://github.com/unaschneck/intaturalist-push-notifications/blob/3dd82fec933843d7758cf164732c0a8cbec6f633/.github/workflows/observation_reporter.yml)
 
-Currently scheduled to check for new observations every ten minutes during UTC North American Daytime. 
-
-Note: Github Actions do not always run exactly every ten minutes (depends on internal Github Runner), but the observations will be collected from when the last collection of observations were collected.
+Currently scheduled to check for new observations every ten minutes during UTC North American Daytime ([16-23 UTC](https://crontab.guru/#*/10_16-23,0-2_*_*_*))
 
 ```
 */10 16-23,0-2 * * *
 ```
+Each observation since previous check is sent as an individual observation to the nfty topic that will be recieved by a phone/desktop as a custom alert
 
-Each observation since previous check is sent as an individual observation to the nfty topic
+Note: Github Actions do not always run exactly every ten minutes (depends on internal Github Runner), but the observations will be collected from when the last collection of observations were collected
 
 ## Development Environment
 
