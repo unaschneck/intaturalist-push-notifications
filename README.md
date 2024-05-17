@@ -1,13 +1,13 @@
 # intaturalist-push-notifications
 [![retrieve-observations](https://github.com/unaschneck/intaturalist-push-notifications/actions/workflows/observation_reporter.yml/badge.svg)](https://github.com/unaschneck/intaturalist-push-notifications/actions/workflows/observation_reporter.yml)
 
-Receive push notifications on an iPhone for user's newest identifications
+Receive push notifications on an phone or desktop for a given user's newest identifications
 
 ## How it Works
 
-- [pyinaturalist: Python client to collect observations based on username](https://github.com/pyinat/pyinaturalist)
-- [GitHub Actions: Schedule how often observations are collected and sent](https://github.com/unaschneck/intaturalist-push-notifications/blob/main/.github/workflows/observation_reporter.yml)
-- [ntfy: Sends push notifications to a Phone/Desktop](https://github.com/binwiederhier/ntfy)
+- [pyinaturalist]((https://github.com/pyinat/pyinaturalist): Python client to collect observations based on username
+- [GitHub Actions](https://github.com/unaschneck/intaturalist-push-notifications/blob/main/.github/workflows/observation_reporter.yml): Schedule how often observations are collected and sent
+- [ntfy:](https://github.com/binwiederhier/ntfy) Sends push notifications to a Phone/Desktop
 
 ## How to Setup
 
@@ -24,10 +24,12 @@ python notifications_for_user.py ${{ secrets.EXAMPLE_USERNAME }} ${{ secrets.EXA
 
 Github Action scheduled to retrieve recent observations on a [schedule during (day) UTC time](https://github.com/unaschneck/intaturalist-push-notifications/blob/3dd82fec933843d7758cf164732c0a8cbec6f633/.github/workflows/observation_reporter.yml)
 
-Currently scheduled to check for new observations every ten minutes from 15-2 hours UTC (North American Daytime). Note: Github Actions do not always run exactly every ten minutes (depends on internal Github Runner). But the observations will be collected from the last time a workflow was run.
+Currently scheduled to check for new observations every ten minutes during UTC North American Daytime. 
+
+Note: Github Actions do not always run exactly every ten minutes (depends on internal Github Runner), but the observations will be collected from when the last collection of observations were collected.
 
 ```
-*/10 15-23,0-1 * * *
+*/10 16-23,0-2 * * *
 ```
 
 Each observation since previous check is sent as an individual observation to the nfty topic
