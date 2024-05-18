@@ -109,11 +109,11 @@ def sendRequest(data_string, taxon, url, icon_img):
 
 if __name__ == '__main__':
 	# Collect time since workflow last ran to determine how far to check for recent observations
-	time_since_last_run = datetime.now() - last_workflow_ran_at
-	time_interval_to_check = math.ceil(time_since_last_run.total_seconds() / 60)
-	time_range_to_check = datetime.now()- timedelta(minutes=time_interval_to_check)
+	time_since_last_run = last_workflow_ran_at - datetime.now()
+	time_interval = math.ceil(time_since_last_run.total_seconds() / 60)
+	time_range_to_check = datetime.now()- timedelta(minutes=time_interval)
 
 	print(f"Current Time:            {datetime.now()}")
 	print(f"Last workflow ran at:    {last_workflow_ran_at}")
-	print(f"Minutes Since Last Run:  { time_interval_to_check }")
+	print(f"Minutes Since Last Run:  {time_interval}")
 	getObservations(user, time_range_to_check)
