@@ -3,6 +3,10 @@
 
 Receive personalized push alerts on a phone/desktop for new iNaturalist identifications between friends
 
+<p align="center">
+  <img src="https://github.com/unaschneck/intaturalist-push-notifications/assets/22159116/7fcbb18a-e3d8-4b86-a513-8c0c5a1b87a2" alt="iphone_notification_example" width="300"/>
+</p>
+
 ## How it Works
 
 Push notifications are collected via the iNaturalist API. New observations are collected from the current time to the most recent workflow run in Github Actions. The new observations are collected and sent to a phone/desktop through custom ntfy topics
