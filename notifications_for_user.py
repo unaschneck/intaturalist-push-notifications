@@ -40,14 +40,23 @@ def getObservations(user_id, last_check):
 		location_guess = "a Strange Place"
 		if observation["place_guess"] is not None:
 			location_guess = observation["place_guess"]
-		observation_link = observation["uri"]
-		img_url = observation["taxon"]["default_photo"]["square_url"]
-		taxon_id = observation["taxon"]["iconic_taxon_name"]
+
+		observation_link = "www.inaturalist.org" # default
+		if observation["uri"] is not None:
+			observation_link = observation["uri"]
+
+		img_url = "https://static.inaturalist.org/wiki_page_attachments/3154-original.png" # default
+		if observation["taxon"]["default_photo"] is not None:
+			img_url = observation["taxon"]["default_photo"]["square_url"]
+
+		taxon_id = "unknown" # default
+		if observation["taxon"]["iconic_taxon_name"] is not None:
+			taxon_id = observation["taxon"]["iconic_taxon_name"]
 
 		# Send observation as request
 		observation_data = f"{user} spotted {id_guess}{seen_previous}in {location_guess}"
 		print(f"Sending new observation: {id_guess}")
-		sendRequest(observation_data, observation["taxon"]["iconic_taxon_name"], observation["uri"], observation["taxon"]["default_photo"]["square_url"])
+		sendRequest(observation_data, taxon_id, observation_link, img_url)
 
 def sendRequest(data_string, taxon, url, icon_img):
 	plant = "herb"         # Plantae
