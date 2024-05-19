@@ -5,9 +5,13 @@ Receive push notifications on an phone or desktop for a given user's newest iden
 
 ## How it Works
 
-- [pyinaturalist](https://github.com/pyinat/pyinaturalist): Python client to collect observations based on username
+- [iNaturalist API](https://api.inaturalist.org/v1/docs/): Collect recent observations from iNaturalist based on username
 - [GitHub Actions](https://github.com/unaschneck/intaturalist-push-notifications/blob/main/.github/workflows/observation_reporter.yml): Schedule how often observations are collected and sent
 - [ntfy:](https://github.com/binwiederhier/ntfy) Sends push notifications to a Phone/Desktop
+
+Recommended:
+
+- [pyinaturalist](https://github.com/pyinat/pyinaturalist): Python client to connect to iNaturalist
 
 ## How to Setup
 

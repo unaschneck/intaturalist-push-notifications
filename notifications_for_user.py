@@ -1,10 +1,8 @@
-from pyinaturalist import get_observations     # collect recent observations
-
-import sys                                     # collect command line arguments
-import math                                    # round time to next nearest minute (rounds up)
-import string                                  # capitalize each word in a string
-import requests                                # send ntfy request
-from datetime import datetime, timedelta, time # track time and collection observations
+import sys                                             # collect command line arguments
+import math                                            # round time to next nearest minute (rounds up)
+import string                                          # capitalize each word in a string
+import requests                                        # send ntfy request, collect recent observations
+from datetime import datetime, timedelta, time         # track time and collection observations
 
 # Command Line Arguments set from observation_reporter.yml
 user = sys.argv[1]
@@ -12,10 +10,9 @@ ntfy_id = sys.argv[2]
 last_workflow_ran_at = datetime.strptime(sys.argv[3], "%Y-%m-%dT%H:%M:%SZ") # UTC
 
 def getObservations(user_id, last_check):
-	recent_observations = get_observations(user_id=user_id, d1=last_check)
+	recent_observations = requests.get(f"https://api.inaturalist.org/v1/observations?user_id={user}&d1={time_range_to_check}").json()
 	observations = recent_observations["results"]
 	for observation in observations:
-		#pprint(observation)
 
 		# Identification with common name based on best guess
 		id_guess = observation["species_guess"]
@@ -30,8 +27,8 @@ def getObservations(user_id, last_check):
 
 		# Track if observation is new or previously seen
 		if id_guess != "Something Strange":
-			previous_observations = get_observations(user_id=user_id, taxon_name=id_guess)["results"]
-			#pprint(previous_observations)
+			previous_observations = requests.get(f"https://api.inaturalist.org/v1/observations?user_id={user}&taxon_name={id_guess}").json()["results"]
+
 			if len(previous_observations) > 1 and len(previous_observations) <= 14:
 				seen_previous = " (again!) "
 			if len(previous_observations) > 15:
