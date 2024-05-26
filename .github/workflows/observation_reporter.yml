@@ -57,3 +57,5 @@ jobs:
           python notifications_for_user.py ${{ secrets.USERNAME_A }} ${{ secrets.NTFY_A }} ${{ env.LAST_CREATED_AT }} 
           echo "User 2:"
           python notifications_for_user.py ${{ secrets.USERNAME_B }} ${{ secrets.NTFY_B }} ${{ env.LAST_CREATED_AT }}
+          echo "User 3:"
+          python notifications_for_user.py ${{ secrets.USERNAME_C }} ${{ secrets.NTFY_C }} ${{ env.LAST_CREATED_AT }}
