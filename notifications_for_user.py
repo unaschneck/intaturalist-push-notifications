@@ -94,6 +94,8 @@ def sendRequest(data_string, taxon, url, icon_img):
 		additional_tags = ", turkey"
 	if current_month == 12: # December
 		additional_tags = ", snowman_with_snow"
+	if "for the first time" in data_string: # first time observation
+		additional_tags = ", star2"
 
 	# Set tags based on taxon, with default tag for unknown type
 	if taxon in taxon_dict:
