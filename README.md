@@ -4,7 +4,7 @@
 Receive personalized push alerts on a phone/desktop for new iNaturalist identifications between friends
 
 <p align="center">
-  <img src="https://github.com/unaschneck/intaturalist-push-notifications/assets/22159116/7fcbb18a-e3d8-4b86-a513-8c0c5a1b87a2" alt="iphone_notification_example" width="300"/>
+  <img src="https://github.com/unaschneck/intaturalist-push-notifications/assets/22159116/9c94c7c6-790c-445b-a63a-b3a577c26e06" alt="iphone_notification_example" width="300"/>
 </p>
 
 ## How it Works
