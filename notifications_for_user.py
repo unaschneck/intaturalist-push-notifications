@@ -26,6 +26,7 @@ def getObservations(user_id, last_check):
 		id_guess = string.capwords(id_guess)
 
 		# Track if observation is new or previously seen
+		seen_previous = ''
 		if id_guess != "Something Strange":
 			previous_observations = requests.get(f"https://api.inaturalist.org/v1/observations?user_id={user}&taxon_name={id_guess}").json()["results"]
 
