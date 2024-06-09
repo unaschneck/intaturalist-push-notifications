@@ -17,12 +17,13 @@ def getObservations(user_id, last_check):
 		# Identification with common name based on best guess
 		id_guess = observation["species_guess"]
 		if id_guess is None:
-			if observation["taxon"] is None:
+			if observation["taxon"] is None: # default is unknown taxon
 				id_guess = "Something Strange"
-			if "preferred_common_name" in observation["taxon"].keys():
-				id_guess = observation["taxon"]["preferred_common_name"]
-			elif "name" in observation["taxon"].keys():
-				id_guess = observation["taxon"]["name"]
+			else:
+				if "preferred_common_name" in observation["taxon"].keys():
+					id_guess = observation["taxon"]["preferred_common_name"]
+				elif "name" in observation["taxon"].keys():
+					id_guess = observation["taxon"]["name"]
 		id_guess = string.capwords(id_guess)
 
 		# Track if observation is new or previously seen
