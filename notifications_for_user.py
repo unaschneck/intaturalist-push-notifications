@@ -31,12 +31,14 @@ def getObservations(user_id, last_check):
 		if id_guess != "Something Strange":
 			previous_observations = requests.get(f"https://api.inaturalist.org/v1/observations?user_id={user}&taxon_name={id_guess}").json()["results"]
 
-			if len(previous_observations) > 1 and len(previous_observations) <= 14:
-				seen_previous = " (again!) "
-			if len(previous_observations) >= 15:
-				seen_previous = " (a lot!) "
 			if len(previous_observations) <= 1:
 				seen_previous = " (for the first time!) "
+			if len(previous_observations) > 1 and len(previous_observations) <= 14:
+				seen_previous = " (again!) "
+			if len(previous_observations) > 14 and len(previous_observations) <= 49:
+				seen_previous = " (a lot!) "
+			if len(previous_observations) > 49:
+				seen_previous = " (an awfully lot!) "
 
 		# Retrieve information about location, link to observation, and default img
 		location_guess = "a Strange Place"
@@ -102,6 +104,8 @@ def sendRequest(data_string, taxon, url, icon_img):
 		additional_tags = ", star2"
 	if "(a lot!)" in data_string: # multiple observations
 		additional_tags = ", fire"
+	if "(an awfully lot!)" in data_string:
+		additional_tags = ", trophy"
 
 	# Set tags based on taxon, with default tag for unknown type
 	if taxon in taxon_dict:
