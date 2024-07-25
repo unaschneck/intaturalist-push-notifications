@@ -17,11 +17,11 @@ Push notifications are collected via the iNaturalist API. New observations are c
 
 ## How to Setup
 
-Fork this repository
+1. Fork this repository
 
-Set Github Secrets for [INaturalist username](https://www.inaturalist.org/) and [ntfy topic](https://github.com/binwiederhier/ntfy)
+2. Set Github Secrets for [INaturalist username](https://www.inaturalist.org/) and [ntfy topic](https://github.com/binwiederhier/ntfy)
 
-Add lines for each INaturalist username at the end of the [`observation_reporter.yml`](https://github.com/unaschneck/intaturalist-push-notifications/blob/main/.github/workflows/observation_reporter.yml)
+3. Add lines for each INaturalist username at the end of the [`observation_reporter.yml`](https://github.com/unaschneck/intaturalist-push-notifications/blob/main/.github/workflows/observation_reporter.yml)
 
 ```
 # Username (example: EXAMPLE_USERNAME) and NTFY (example: EXAMPLE_NTFY) stored in secrets 
@@ -38,11 +38,12 @@ Currently scheduled to check for new observations every ten minutes during UTC N
 ```
 Each observation since previous check is sent as an individual observation to the nfty topic that will be received by a phone/desktop as a custom alert
 
-Note: Github Actions do not always run exactly every ten minutes (depends on internal Github Runner), but the observations will be collected from when the last collection of observations were collected
+> [!Note]
+> Github Actions do not always run exactly every ten minutes (depends on internal Github Runners), but observations will be collected from when the last collection of observations were collected
 
 ## Development Environment
 
-To run or test against `intaturalist-push-notifications` github repo/fork, a development environment can be created via conda/miniconda
+For developers, to run or test against `intaturalist-push-notifications` Github fork, a development environment can be created via conda
 
 First, [install Miniconda](https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html)
 
