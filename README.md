@@ -41,6 +41,9 @@ Each observation since previous check is sent as an individual observation to th
 > [!Note]
 > Github Actions do not always run exactly every ten minutes (depends on internal Github Runners), but observations will be collected from when the last collection of observations were collected
 
+> [!Important]
+> Github Actions workflows in a public repository are automatically disabled when no repository activity has occurred in 60 days
+
 ## Development Environment
 
 For developers, to run or test against `intaturalist-push-notifications` Github fork, a development environment can be created via conda

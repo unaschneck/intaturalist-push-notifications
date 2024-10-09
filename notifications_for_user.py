@@ -91,21 +91,24 @@ def sendRequest(data_string, taxon, url, icon_img):
 				  "Animalia": other
 				  }
 
-	# Additional specialty tags
+	# Additional frequency tags
 	current_month = datetime.now().month
-	additional_tags = ""
-	if current_month == 10: # October
-		additional_tags = ", jack_o_lantern"
-	if current_month == 11: # November
-		additional_tags = ", turkey"
-	if current_month == 12: # December
-		additional_tags = ", snowman_with_snow"
+	frequency_tags = ""
 	if "(for the first time!)" in data_string: # first time observation
-		additional_tags = ", star2"
+		frequency_tags = ", star2"
 	if "(a lot!)" in data_string: # multiple observations
-		additional_tags = ", fire"
+		frequency_tags = ", fire"
 	if "(an awfully lot!)" in data_string:
-		additional_tags = ", trophy"
+		frequency_tags = ", trophy"
+
+	# Additional specialty tags
+	special_tags = ""
+	if current_month == 10: # October
+		special_tags = ", jack_o_lantern"
+	if current_month == 11: # November
+		special_tags = ", turkey"
+	if current_month == 12: # December
+		special_tags = ", snowman_with_snow"
 
 	# Set tags based on taxon, with default tag for unknown type
 	if taxon in taxon_dict:
@@ -113,7 +116,7 @@ def sendRequest(data_string, taxon, url, icon_img):
 	else:
 		taxon_tag = unknown
 
-	all_tags = taxon_tag + additional_tags
+	all_tags = taxon_tag + frequency_tags + special_tags
 
 	# testing request: testing314
 	requests.post(f"https://ntfy.sh/{ntfy_id}",
