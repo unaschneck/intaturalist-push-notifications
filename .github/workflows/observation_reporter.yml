@@ -3,7 +3,8 @@ name: retrieve-observations
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/10 16-23,0-2 * * *" # Every 10 minutes during UTC day (Every 10 minutes, starting at minutes past the hour, at 03:00 PM through 11:59 PM and 12:00 AM through 02:59 AM)
+    #- cron: "*/10 16-23,0-2 * * *" # Summer: Every 10 minutes during UTC day (Every 10 minutes, starting at minutes past the hour, at 03:00 PM through 11:59 PM and 12:00 AM through 02:59 AM)
+    - cron: "*/30 16-23,0-2 * * *" #  Winter: Every 30 minutes during UTC day (Every 10 minutes, starting at minutes past the hour, at 03:00 PM through 11:59 PM and 12:00 AM through 02:59 AM)
 
 jobs:
   main-job:

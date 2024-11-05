@@ -36,10 +36,14 @@ Currently scheduled to check for new observations every ten minutes during UTC N
 ```
 */10 16-23,0-2 * * *
 ```
+
+> [!Note]
+> Every 30 minutes in the northern hemisphere winter months `*/30 16-23,0-2 * * *`
+
 Each observation since previous check is sent as an individual observation to the nfty topic that will be received by a phone/desktop as a custom alert
 
 > [!Note]
-> Github Actions do not always run exactly every ten minutes (depends on internal Github Runners), but observations will be collected from when the last collection of observations were collected
+> Github Actions do not always run exactly every ten/thirty minutes (depends on internal Github Runners), but observations will be collected from when the last collection of observations were collected
 
 > [!Important]
 > Github Actions workflows in a public repository are automatically disabled when no repository activity has occurred in 60 days
