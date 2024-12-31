@@ -107,7 +107,7 @@ def sendRequest(data_string, taxon, url, icon_img):
 		special_tags = ", jack_o_lantern"
 	if current_month == 11: # November
 		special_tags = ", turkey"
-	if current_month == 12: # December
+	if current_month == 12 or current_month == 1 or current_month == 2: # December, January, February
 		special_tags = ", snowman_with_snow"
 
 	# Set tags based on taxon, with default tag for unknown type
