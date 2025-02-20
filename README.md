@@ -50,7 +50,7 @@ Each observation since previous check is sent as an individual observation to th
 
 ## Development Environment
 
-For developers, to run or test against `intaturalist-push-notifications` Github fork, a development environment can be created via conda
+For developers, to run `intaturalist-push-notifications` on Github fork, a development environment can be created via conda
 
 First, [install Miniconda](https://docs.conda.io/projects/miniconda/en/latest/miniconda-install.html)
 
