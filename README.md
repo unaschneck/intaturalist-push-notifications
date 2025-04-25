@@ -1,7 +1,7 @@
 # intaturalist-push-notifications
 [![retrieve-observations](https://github.com/unaschneck/intaturalist-push-notifications/actions/workflows/observation_reporter.yml/badge.svg)](https://github.com/unaschneck/intaturalist-push-notifications/actions/workflows/observation_reporter.yml)
 
-Receive personalized push alerts on a phone/desktop for new iNaturalist identifications between friends
+Receive personalized alerts on a phone/desktop for new iNaturalist identifications between friends
 
 <p align="center">
   <img src="https://github.com/unaschneck/intaturalist-push-notifications/assets/22159116/9c94c7c6-790c-445b-a63a-b3a577c26e06" alt="iphone_notification_example" width="300"/>
