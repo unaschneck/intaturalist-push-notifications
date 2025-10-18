@@ -9,7 +9,7 @@ Receive personalized alerts on your phone/desktop for new iNaturalist identifica
 
 ## How it Works
 
-Push notifications are collected via the iNaturalist API. New observations are collected from the current time to the most recent workflow run in Github Actions. The new observations are collected and sent to a phone/desktop through custom ntfy topics
+Push notifications are generated from new observations collected via the iNaturalist API. New observations are collected from the current time to the most recent workflow run in Github Actions. The new observations are collected and sent to a phone/desktop through custom ntfy topics
 
 - [iNaturalist API](https://api.inaturalist.org/v1/docs/): Collect recent observations from iNaturalist based on username
 - [GitHub Actions](https://github.com/unaschneck/intaturalist-push-notifications/blob/main/.github/workflows/observation_reporter.yml): Schedule how often observations are collected and sent
